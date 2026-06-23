@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useAuth } from "../context/AuthContext";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import "./Login.css";
 
 const Login = () => {
@@ -50,6 +50,9 @@ const Login = () => {
             />
           </div>
           {error && <div className="error-message">{error}</div>}
+          <div style={{ marginTop: 8 }}>
+            <Link to="/reset-password">Forgot password?</Link>
+          </div>
           <button type="submit" disabled={loading}>
             {loading ? "Logging in..." : "Login"}
           </button>

@@ -8,14 +8,20 @@ const seedAdminUser = async () => {
     const name = process.env.ADMIN_NAME || "Admin User";
     const role = process.env.ADMIN_ROLE || "admin";
 
-    const existingAdmin = await User.findOne({ email });
-    if (existingAdmin) {
-      console.log("Admin user already exists.");
+    const hashedPassword = await bcrypt.hash(password, 10);
+    let adminUser = await User.findOne({ email });
+    
+    if (adminUser) {
+      // Reset existing admin password
+      adminUser.password = hashedPassword;
+      adminUser.resetPasswordOtp = undefined;
+      adminUser.resetPasswordOtpExpires = undefined;
+      await adminUser.save();
+      console.log(`Reset admin user password: ${email}`);
       return;
     }
 
-    const hashedPassword = await bcrypt.hash(password, 10);
-    const adminUser = new User({
+    adminUser = new User({
       name,
       email,
       password: hashedPassword,

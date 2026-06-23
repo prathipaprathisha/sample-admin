@@ -106,4 +106,16 @@ export const api = {
     method: "DELETE",
     headers: { Authorization: `Bearer ${token}` },
   }).then((res) => res.json()),
+  // Password reset
+  forgotPassword: (data) => fetch(`${API_URL}/auth/forgot-password`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data),
+  }).then((res) => res.json()),
+
+  resetPassword: (data) => fetch(`${API_URL}/auth/reset-password`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data),
+  }).then((res) => res.json()),
 };
